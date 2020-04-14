@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/TaskManager</property>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">home060658</property>
+        <!--<property name="connection.url">jdbc:oracle:thin:@10.184.12.51:1521/XE</property>-->
+        <!--<property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>-->
+        <!--<property name="connection.username">XE</property>-->
+
+        <property name="hibernate.hbm2ddl.auto">validate</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">false</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.jdbc.batch_size">20</property>
+
+        <mapping package="com.entity"/>
+        <mapping class="com.entity.Task"/>
+        <!-- <property name="connection.password"/> -->
+
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>

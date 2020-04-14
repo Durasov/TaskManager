@@ -1,0 +1,4 @@
+CREATE TRIGGER TaskInsertTrigger
+AFTER INSERT ON task
+FOR EACH ROW
+EXECUTE PROCEDURE addCreateTaskDate();

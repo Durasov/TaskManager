@@ -1,0 +1,3 @@
+# Project exclude paths
+/src/main/webapp/WEB-INF/react/node_modules/
+/target/
