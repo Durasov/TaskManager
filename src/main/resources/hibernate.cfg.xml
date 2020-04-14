@@ -7,7 +7,7 @@
         <property name="connection.url">jdbc:postgresql://localhost:5432/TaskManager</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="connection.username">postgres</property>
-        <property name="connection.password">home060658</property>
+        <property name="connection.password"></property>
         <!--<property name="connection.url">jdbc:oracle:thin:@10.184.12.51:1521/XE</property>-->
         <!--<property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>-->
         <!--<property name="connection.username">XE</property>-->
