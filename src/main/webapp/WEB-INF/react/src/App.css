@@ -42,9 +42,18 @@ button{
   margin-bottom: 50px;
 }
 
+.btn-group>.btn:not(:first-child) {
+  margin-left: 10px;
+}
+
 .hello {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
+}
+
+.modal-header-custom-class{
+  text-align: center;
+  display: block;
 }

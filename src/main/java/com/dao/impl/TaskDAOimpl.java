@@ -42,6 +42,7 @@ public class TaskDAOimpl implements TaskDAO{
         updatedTask.setTaskName(task.getTaskName());
         updatedTask.setTaskManager(task.getTaskManager());
         updatedTask.setTaskStatus(task.getTaskStatus());
+        updatedTask.setTaskStatusDate(task.getTaskStatusDate());
         session.update(updatedTask);
         transaction.commit();
     }

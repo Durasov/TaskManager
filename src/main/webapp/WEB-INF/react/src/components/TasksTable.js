@@ -1,18 +1,14 @@
 import React from 'react'
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import Tasks from "./Tasks";
+import {BootstrapTable, TableHeaderColumn, InsertModalFooter, InsertModalHeader} from 'react-bootstrap-table';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import axios from "axios";
-
 
 class TasksTable extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {value: ''};
-        this.rerender = this.rerender.bind(this);
-        this.handleRefresh = this.handleRefresh.bind(this);
-        //this.service = new Tasks();
+        this.getAll = this.getAll.bind(this);
     }
 
     componentDidMount() {
@@ -38,6 +34,7 @@ class TasksTable extends React.Component {
 
     processUpdate() {
         console.log('Вызван метод processUpdate');
+        console.log(this, 'this processUpdate')
         this.getAll().then(r => {
                 return r
             }
@@ -53,10 +50,6 @@ class TasksTable extends React.Component {
         })
     };
 
-    rerender(){
-        this.forceUpdate();
-    }
-
     handleDeletedRow(rowKeys) {
         console.log('удаляемые данные: ', rowKeys);
         console.log('Размер массива rowKeys: ', rowKeys.length);
@@ -70,19 +63,12 @@ class TasksTable extends React.Component {
             })
     }
 
-    handleRefresh(e){
-        this.setState({});
-    }
-
     handleInsertedRow(row) {
         return axios
             .get(`/taskManager/tasks/create?taskId=${row.taskId}&taskName=${row.taskName}&taskManager=${row.taskManager}&taskStatus=${row.taskStatus}`,{"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"})
             .then(response => {
                 console.log(response)
-                //console.log("taskCreateDate: " + row.taskCreateDate);
                 //window.location.reload();
-                this.handleRefresh.bind(this);
-                row.taskCreateDate = new Date().toLocaleDateString();
             })
             .catch(error => {
                 console.log(error);
@@ -110,8 +96,7 @@ class TasksTable extends React.Component {
             });
     }
 
-    tdCustomStyle(cell, row) {   // String example
-        //console.log("Статус: " + row.taskStatus);
+    tdCustomStyle(cell, row) {
         if(row.taskStatus === 'Выполнено'){
             return { 'background-color': '#3cc63c' };
         }
@@ -120,12 +105,43 @@ class TasksTable extends React.Component {
         }else return { whiteSpace: 'normal' }
     }
 
+    handleSave(save) {
+        // Custom your onSave event here,
+        // it's not necessary to implement this function if you have no any process before save
+        console.log('This is my custom function for save event');
+        setTimeout(this.getAll.bind(this), 1000);
+        save();
+    }
+
+    createCustomModalFooter = (save) => {
+        return (
+            <InsertModalFooter
+                saveBtnText='Сохранить'
+                closeBtnText='Закрыть'
+                onSave={ () => this.handleSave(save) }>
+            </InsertModalFooter>
+        );
+    }
+
+    createCustomModalHeader = () => {
+        return (
+            <InsertModalHeader
+                title='Добавить задачу'
+                className='modal-header-custom-class'
+                hideClose={ true } /> // to hide the close button
+
+        );
+    }
+
     render() {
         console.log(this.state.data,'для таблицы с задачами');
         const options = {
             afterDeleteRow: this.handleDeletedRow,
             afterInsertRow: this.handleInsertedRow,
+            afterTableComplete: this.handleTableComplete,
             handleConfirmDeleteRow: this.customConfirm,
+            insertModalFooter: this.createCustomModalFooter,
+            insertModalHeader: this.createCustomModalHeader,
             noDataText: 'Дождитесь загрузки данных',
             insertText: 'Добавить задание',
             deleteText: 'Удалить задание',
@@ -144,7 +160,9 @@ class TasksTable extends React.Component {
             blurToSave: true,
             beforeSaveCell: this.beforeSaveCell,
         };
-//hiddenOnInsert
+
+        const statusTypes = [ 'Создана', 'Назначена', 'В работе', 'Выполнено' ];
+
         return (
             <div >
                 <BootstrapTable
@@ -155,7 +173,7 @@ class TasksTable extends React.Component {
                     deleteRow
                     data={this.state.data}
                     options={ options }
-                    insertRow
+                    insertRow={ true }
                     exportCSV
                     csvFileName='tasks-table'>
                     <TableHeaderColumn hidden selectRow={ selectRow } hiddenOnInsert autoValue
@@ -165,13 +183,13 @@ class TasksTable extends React.Component {
                     <TableHeaderColumn deleteRow dataField='taskName' headerAlign='center'>
                         Задание
                     </TableHeaderColumn>
-                    <TableHeaderColumn deleteRow dataField='taskCreateDate' headerAlign='center' hiddenOnInsert>
+                    <TableHeaderColumn deleteRow dataField='taskCreateDate' headerAlign='center' hiddenOnInsert editable={ false }>
                         Дата создания задания
                     </TableHeaderColumn>
-                    <TableHeaderColumn deleteRow dataField='taskManager' headerAlign='center'>
+                    <TableHeaderColumn deleteRow dataField='taskManager'  headerAlign='center'>
                         Ответственный
                     </TableHeaderColumn>
-                    <TableHeaderColumn deleteRow dataField='taskStatus' headerAlign='center' dataAlign='center' tdStyle={ this.tdCustomStyle } hiddenOnInsert>
+                    <TableHeaderColumn deleteRow dataField='taskStatus' headerAlign='center' dataAlign='center' tdStyle={ this.tdCustomStyle } hiddenOnInsert editable={ { type: 'select', options: { values: statusTypes } } }>
                         Статус
                     </TableHeaderColumn>
                 </BootstrapTable>

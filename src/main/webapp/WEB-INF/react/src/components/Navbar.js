@@ -11,7 +11,7 @@ export const Navbar = () => (
             <li className="nav-item">
                 <NavLink
                     className="nav-link"
-                    to="/"
+                    to="/taskManager"
                     exact
                 >
                     Главная

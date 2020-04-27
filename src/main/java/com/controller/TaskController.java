@@ -68,7 +68,10 @@ public class TaskController {
                           @RequestParam(value = "taskManager") String task_manager,
                           @RequestParam(value = "taskStatus") String task_status){
         try {
-            Task task = new Task(task_id, task_name, task_manager, task_status);
+            LocalDate localDate = LocalDate.now(ZoneId.of("Etc/GMT+4"));
+            java.sql.Date task_statusDate = java.sql.Date.valueOf(localDate);
+
+            Task task = new Task(task_id, task_name, task_manager, task_status, task_statusDate);
             taskDAOimpl.updateTask(task);
         } catch (Exception ex) {
             return ex.getMessage();

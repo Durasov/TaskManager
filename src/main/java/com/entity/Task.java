@@ -65,11 +65,12 @@ public class Task implements Serializable{
         this.task_status = task_status;
     }
 
-    public Task(int task_id, String task_name, String task_manager, String task_status) {
+    public Task(int task_id, String task_name, String task_manager, String task_status, Date task_statusDate) {
         this.task_id  = task_id ;
         this.task_name = task_name;
         this.task_manager = task_manager;
         this.task_status = task_status;
+        this.task_statusDate = task_statusDate;
     }
 
     public int getTaskId() {

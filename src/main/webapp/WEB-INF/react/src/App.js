@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import {Home} from './pages/Home'
-import {Schoolkid} from './pages/Schoolkid'
-import {Subject} from './pages/Subject'
-import {Teacher} from './pages/Teacher'
-import {Mark} from './pages/Mark'
 import {Task} from './pages/Task'
 import {CompletedTask} from './pages/CompletedTask'
 import './App.css';
 import {Navbar} from  "./components/Navbar";
 import Helmet from "react-helmet"
 import logo from './logo.svg';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Switch, Route } from "react-router-dom";
+import {createBrowserHistory} from 'history'
 
 class App extends Component {
 
@@ -20,17 +17,18 @@ class App extends Component {
     };
 
     render() {
+        const history = createBrowserHistory()
         return (
-            <Router>
+            <Router history={history}>
                 <Helmet>
                     <title>TaskManager</title>
-                    <link rel="logo" href="logo.svg" type="image/svg"/>
+                    <link rel="icon" href={logo} type="image/svg"/>
                 </Helmet>
                 <Navbar />
                 <Switch>
-                    <Route path='/' exact component={Home} />
-                    <Route path='/tasks' component={Task} />
-                    <Route path='/completedTasks' component={CompletedTask} />
+                    <Route history={history} path='/taskManager' exact component={Home} />
+                    <Route history={history} path='/tasks' component={Task} />
+                    <Route history={history} path='/completedTasks' component={CompletedTask} />
                 </Switch>
             </Router>
         );

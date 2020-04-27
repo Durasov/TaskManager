@@ -44,7 +44,7 @@ class CompletedTasksTable extends React.Component {
             afterDeleteRow: this.handleDeletedRow,
             handleConfirmDeleteRow: this.customConfirm,
             noDataText: 'Дождитесь загрузки данных',
-            deleteText: 'Удалить задание'
+            deleteText: 'Удалить'
         };
 
         const selectRow = {
@@ -54,7 +54,6 @@ class CompletedTasksTable extends React.Component {
             bgColor: '#dee2e6'
         };
 
-//hiddenOnInsert
         return (
             <div >
                 <BootstrapTable
@@ -72,6 +71,9 @@ class CompletedTasksTable extends React.Component {
                     </TableHeaderColumn>
                     <TableHeaderColumn deleteRow dataField='taskName' headerAlign='center'>
                         Задание
+                    </TableHeaderColumn>
+                    <TableHeaderColumn deleteRow dataField='taskStatusDate' headerAlign='center'>
+                        Дата выполнения
                     </TableHeaderColumn>
                     <TableHeaderColumn deleteRow dataField='taskManager' headerAlign='center'>
                         Ответственный
