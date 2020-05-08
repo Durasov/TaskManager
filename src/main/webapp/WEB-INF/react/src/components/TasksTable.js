@@ -64,6 +64,7 @@ class TasksTable extends React.Component {
     }
 
     handleInsertedRow(row) {
+        console.log('handleInsertedRow: ', row);
         return axios
             .get(`/taskManager/tasks/create?taskId=${row.taskId}&taskName=${row.taskName}&taskManager=${row.taskManager}&taskStatus=${row.taskStatus}`,{"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"})
             .then(response => {
@@ -113,7 +114,7 @@ class TasksTable extends React.Component {
         save();
     }
 
-    createCustomModalFooter = (save) => {
+    createCustomModalFooter = (closeModal, save) => {
         return (
             <InsertModalFooter
                 saveBtnText='Сохранить'
@@ -138,7 +139,6 @@ class TasksTable extends React.Component {
         const options = {
             afterDeleteRow: this.handleDeletedRow,
             afterInsertRow: this.handleInsertedRow,
-            afterTableComplete: this.handleTableComplete,
             handleConfirmDeleteRow: this.customConfirm,
             insertModalFooter: this.createCustomModalFooter,
             insertModalHeader: this.createCustomModalHeader,
@@ -163,6 +163,8 @@ class TasksTable extends React.Component {
 
         const statusTypes = [ 'Создана', 'Назначена', 'В работе', 'Выполнено' ];
 
+        const taskManagers = [ ' ', 'Верещагин А.Ю.', 'Гребенкин А.С.', 'Дурасов С.В.', 'Катков Е.Д.', 'Лебедев Е.А', 'Майоров А.С.', 'Митрофанов Е.Н.', 'Тарасов И.А.', 'Ураев А.Р.' ];
+
         return (
             <div >
                 <BootstrapTable
@@ -186,7 +188,7 @@ class TasksTable extends React.Component {
                     <TableHeaderColumn deleteRow dataField='taskCreateDate' headerAlign='center' hiddenOnInsert editable={ false }>
                         Дата создания задания
                     </TableHeaderColumn>
-                    <TableHeaderColumn deleteRow dataField='taskManager'  headerAlign='center'>
+                    <TableHeaderColumn deleteRow dataField='taskManager'  headerAlign='center' editable={ { type: 'select', options: { values: taskManagers } } }>
                         Ответственный
                     </TableHeaderColumn>
                     <TableHeaderColumn deleteRow dataField='taskStatus' headerAlign='center' dataAlign='center' tdStyle={ this.tdCustomStyle } hiddenOnInsert editable={ { type: 'select', options: { values: statusTypes } } }>

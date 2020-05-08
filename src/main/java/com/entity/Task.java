@@ -4,13 +4,14 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 
-@SequenceGenerator(name = "seqPK", sequenceName = "seqPK")
+@SequenceGenerator(name = "seqpk", sequenceName = "seqpk")
+//@SequenceGenerator(name = "taskmanagerseq", sequenceName = "taskmanagerseq")
 @Entity
 @Table(name = "task")
 public class Task implements Serializable{
 
     @Id
-    @GeneratedValue(generator = "seqPK")
+    @GeneratedValue(generator = "seqpk")
     @Column(name = "task_id", nullable = false)
     private int task_id ;
 

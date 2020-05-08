@@ -101,11 +101,11 @@
             <version>5.2.12.Final</version>
         </dependency>
 
-        <!--<dependency>
+        <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc8</artifactId>
             <version>19.3</version>
-        </dependency> -->
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
         <dependency>
@@ -213,6 +213,17 @@
                     <workingDirectory>src/main/webapp/WEB-INF/react</workingDirectory>
                 </configuration>
 
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <compress>false</compress>
+                    </archive>
+                </configuration>
             </plugin>
 
             <plugin>
