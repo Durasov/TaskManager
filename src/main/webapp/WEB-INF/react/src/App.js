@@ -26,7 +26,7 @@ class App extends Component {
                 </Helmet>
                 <Navbar />
                 <Switch>
-                    <Route history={history} path='/taskManager' exact component={Home} />
+                    <Route history={history} exact path='/taskManager' component={Home} />
                     <Route history={history} path='/tasks' component={Task} />
                     <Route history={history} path='/completedTasks' component={CompletedTask} />
                 </Switch>

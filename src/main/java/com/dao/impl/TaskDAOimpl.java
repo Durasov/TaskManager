@@ -25,6 +25,7 @@ public class TaskDAOimpl implements TaskDAO{
         //Task task = new Task(task_name, task_manager, task_status);
         session.save(task);
         transaction.commit();
+        session.getSessionFactory().close();
     }
 
     public void deleteTask(int task_id){
@@ -33,6 +34,7 @@ public class TaskDAOimpl implements TaskDAO{
         Task task = session.load(Task.class,task_id);
         session.delete(task);
         transaction.commit();
+        session.getSessionFactory().close();
     }
 
     public void updateTask(Task task){
@@ -45,6 +47,7 @@ public class TaskDAOimpl implements TaskDAO{
         updatedTask.setTaskStatusDate(task.getTaskStatusDate());
         session.update(updatedTask);
         transaction.commit();
+        session.getSessionFactory().close();
     }
 
     public List<Task> getActualTasks(){
@@ -52,6 +55,7 @@ public class TaskDAOimpl implements TaskDAO{
         Transaction transaction = session.beginTransaction();
         List<Task> tasks = session.createQuery("from Task where task_status != 'Выполнено'").list();
         transaction.commit();
+        session.getSessionFactory().close();
         return tasks;
     }
 
@@ -60,6 +64,7 @@ public class TaskDAOimpl implements TaskDAO{
         Transaction transaction = session.beginTransaction();
         List<Task> tasks = session.createQuery("from Task where task_status = 'Выполнено'").list();
         transaction.commit();
+        session.getSessionFactory().close();
         return tasks;
     }
 

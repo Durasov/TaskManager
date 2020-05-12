@@ -4,23 +4,40 @@ import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.security.authentication.BadCredentialsException;
 //import org.springframework.security.authentication.LockedException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Controller
+//@RestController
 public class WelcomeController {
 
     // inject via application.properties
     @Value("${welcome.message:test}")
     private String message = "Hello World";
 
-    @RequestMapping("/taskManager")
+    //@RequestMapping("/taskManager")
+    //@RequestMapping(path = "/taskManager", method = RequestMethod.GET)
+    //@ResponseBody
+    @GetMapping("/taskManager")
     public String welcome(Map<String, Object> model) {
+        model.put("message", this.message);
+        return "index";
+    }
+
+    //@RequestMapping("/tasks")
+    //@RequestMapping(path = "/tasks", method = RequestMethod.GET)
+    @GetMapping("/tasks")
+    public String redirect1(Map<String, Object> model) {
+        model.put("message", this.message);
+        return "index";
+    }
+
+    //@RequestMapping("/completedTasks")
+    @GetMapping("/completedTasks")
+    public String redirect2(Map<String, Object> model) {
         model.put("message", this.message);
         return "index";
     }

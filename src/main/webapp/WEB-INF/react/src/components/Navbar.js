@@ -6,7 +6,6 @@ export const Navbar = () => (
         <div className="navbar-brand">
             TaskManager
         </div>
-
         <ul className="navbar-nav" >
             <li className="nav-item">
                 <NavLink

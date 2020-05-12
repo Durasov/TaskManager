@@ -15,6 +15,7 @@
         <version>2.1.2.RELEASE</version>
     </parent>
 
+
     <dependencies>
 
         <!-- Spring Security -->
@@ -51,10 +52,16 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
         <!-- JSTL for JSP -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -101,11 +108,11 @@
             <version>5.2.12.Final</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc8</artifactId>
             <version>19.3</version>
-        </dependency>
+        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
         <dependency>
@@ -211,6 +218,7 @@
                 <configuration>
                     <nodeVersion>v10.15.2</nodeVersion>
                     <workingDirectory>src/main/webapp/WEB-INF/react</workingDirectory>
+                    <!--<<workingDirectory>src/main/resources/static/react</workingDirectory>-->
                 </configuration>
 
             </plugin>
@@ -241,10 +249,12 @@
                             <resources>
                                 <resource>
                                     <directory>src/main/webapp/WEB-INF/jsp</directory>
+                                    <!--<directory>src/main/resources/static/react</directory>-->
                                     <filtering>true</filtering>
                                 </resource>
                                 <resource>
                                     <directory>src/main/webapp/WEB-INF/react/build</directory>
+                                    <!--<directory>src/main/resources/static/react/build</directory>-->
                                     <filtering>true</filtering>
                                 </resource>
                             </resources>

@@ -1,5 +1,6 @@
 import React from 'react'
 import {BootstrapTable, TableHeaderColumn, InsertModalFooter, InsertModalHeader} from 'react-bootstrap-table';
+//import BootstrapTable from 'react-bootstrap-table-next';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import axios from "axios";
 
@@ -145,7 +146,10 @@ class TasksTable extends React.Component {
             noDataText: 'Дождитесь загрузки данных',
             insertText: 'Добавить задание',
             deleteText: 'Удалить задание',
-            saveText: 'Сохранить'
+            saveText: 'Сохранить',
+            defaultSortName: 'taskCreateDate',  // default sort column name
+            defaultSortOrder: 'desc',  // default sort order
+            sortIndicator: true  // disable sort indicator
         };
 
         const selectRow = {
@@ -163,10 +167,9 @@ class TasksTable extends React.Component {
 
         const statusTypes = [ 'Создана', 'Назначена', 'В работе', 'Выполнено' ];
 
-        const taskManagers = [ ' ', 'Верещагин А.Ю.', 'Гребенкин А.С.', 'Дурасов С.В.', 'Катков Е.Д.', 'Лебедев Е.А', 'Майоров А.С.', 'Митрофанов Е.Н.', 'Тарасов И.А.', 'Ураев А.Р.' ];
+        const taskManagers = [ '', 'Верещагин А.Ю.', 'Гребенкин А.С.', 'Дурасов С.В.', 'Катков Е.Д.', 'Лебедев Е.А', 'Майоров А.С.', 'Митрофанов Е.Н.', 'Тарасов И.А.', 'Ураев А.Р.' ];
 
         return (
-            <div >
                 <BootstrapTable
                     hiddenOnInsert
                     hover
@@ -177,7 +180,8 @@ class TasksTable extends React.Component {
                     options={ options }
                     insertRow={ true }
                     exportCSV
-                    csvFileName='tasks-table'>
+                    csvFileName='tasks-table'
+                    pagination>
                     <TableHeaderColumn hidden selectRow={ selectRow } hiddenOnInsert autoValue
                                        deleteRow isKey dataField='taskId'>
                         ID
@@ -185,17 +189,16 @@ class TasksTable extends React.Component {
                     <TableHeaderColumn deleteRow dataField='taskName' headerAlign='center'>
                         Задание
                     </TableHeaderColumn>
-                    <TableHeaderColumn deleteRow dataField='taskCreateDate' headerAlign='center' hiddenOnInsert editable={ false }>
+                    <TableHeaderColumn deleteRow dataField='taskCreateDate' headerAlign='center' hiddenOnInsert editable={ false } dataSort={ true }>
                         Дата создания задания
                     </TableHeaderColumn>
                     <TableHeaderColumn deleteRow dataField='taskManager'  headerAlign='center' editable={ { type: 'select', options: { values: taskManagers } } }>
                         Ответственный
                     </TableHeaderColumn>
-                    <TableHeaderColumn deleteRow dataField='taskStatus' headerAlign='center' dataAlign='center' tdStyle={ this.tdCustomStyle } hiddenOnInsert editable={ { type: 'select', options: { values: statusTypes } } }>
+                    <TableHeaderColumn deleteRow dataField='taskStatus' headerAlign='center' dataAlign='center' tdStyle={ this.tdCustomStyle } hiddenOnInsert editable={ { type: 'select', options: { values: statusTypes } } } dataSort>
                         Статус
                     </TableHeaderColumn>
                 </BootstrapTable>
-            </div>
         )
     }
 }
